@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.web">
+
+
+  <select id="findUserid" parameterType="int" resultType="cn.web.entity.User">
+  	SELECT * FROM USER WHERE id = #{id}
+  </select>
+  
+  <select id="findUname" parameterType="String" resultType="cn.web.entity.User">
+  	SELECT * FROM USER WHERE username LIKE #{username}
+  	<!-- SELECT * FROM USER WHERE username LIKE concat('%',#{username},'%') -->
+  	<!-- SELECT * FROM USER WHERE username LIKE '%' #{username} '%' -->
+  </select>
+  
+  <delete id="deleteByid" parameterType="int">
+		delete from User where id=#{id}  	
+  </delete>
+  
+  <insert id="insert" parameterType="cn.web.entity.User">
+  	<selectKey databaseId="id" order="AFTER">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+  	INSERT INTO USER (id,username,sex,birthday,address) VALUES (#{id},#{username},#{sex},#{birthday},#{address})
+  </insert>
+  
+  <update id="update" parameterType="cn.web.entity.User">
+  	UPDATE USER SET username=#{username} WHERE id=#{id} 
+  </update>
+  
+  
+</mapper>
